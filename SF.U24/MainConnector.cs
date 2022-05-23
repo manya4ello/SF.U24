@@ -19,8 +19,9 @@ namespace SF.U24.Connector
                 await connection.OpenAsync();
                 result = true;
             }
-            catch
+            catch (Exception ex)    
             {
+                Console.WriteLine(ex.Message);
                 result = false;
             }
 

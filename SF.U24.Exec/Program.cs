@@ -35,6 +35,23 @@ namespace SF.U24.Exec
 
                 data = db.SelectAll(tablename);
 
+                Console.WriteLine("Количество строк в " + tablename + ": " + data.Rows.Count);
+
+                foreach (DataColumn column in data.Columns)
+                {
+                    Console.Write($"{column.ColumnName}\t");
+                }
+                Console.WriteLine();
+                foreach (DataRow row in data.Rows)
+                {
+                    var cells = row.ItemArray;
+                    foreach (var cell in cells)
+                    {
+                        Console.Write($"{cell}\t");
+                    }
+                    Console.WriteLine();
+                }
+
                 Console.WriteLine("Отключаем БД!");
                 connector.DisconnectAsync();
 
