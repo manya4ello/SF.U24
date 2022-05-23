@@ -9,13 +9,13 @@ namespace SF.U24.Connector
 {
     public class MainConnector
     {
-
+        public SqlConnection connection;
         public async Task<bool> ConnectAsync()
         {
             bool result;
             try
             {
-                SqlConnection connection = new SqlConnection(ConnectionString.MsSqlConnection);
+                connection = new SqlConnection(ConnectionString.MsSqlConnection);
                 await connection.OpenAsync();
                 result = true;
             }
@@ -27,11 +27,23 @@ namespace SF.U24.Connector
             return result;
         }
 
-        public async void DisconnectAsync(SqlConnection connection)
+        public async void DisconnectAsync()
         {
             if (connection.State == ConnectionState.Open)
             {
                 await connection.CloseAsync();
+            }
+        }
+
+        public SqlConnection GetConnection()
+        {
+            if (connection.State == ConnectionState.Open)
+            {
+                return connection;
+            }
+            else
+            {
+                throw new Exception("Подключение уже закрыто!");
             }
         }
     }
